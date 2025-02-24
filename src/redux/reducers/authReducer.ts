@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 import { localDataNames } from "../../constant/appInfor";
 
 export interface AuthState {
@@ -7,6 +8,7 @@ export interface AuthState {
   name: string;
   rule: number;
 }
+
 const initialState = {
   token: "",
   _id: "",
@@ -30,6 +32,7 @@ const authSlice = createSlice({
     },
     refreshToken: (state, action) => {
       state.data.token = action.payload;
+      syncLocal(state.data); // Cập nhật token mới vào cookies
     },
   },
 });
@@ -40,5 +43,11 @@ export const { addAuth, removeAuth, refreshToken } = authSlice.actions;
 export const authSelector = (state: any) => state.authReducer.data;
 
 const syncLocal = (data: any) => {
-  localStorage.setItem(localDataNames.authData, JSON.stringify(data));
+  if (data && data.token) {
+    // Lưu thông tin auth vào cookies
+    Cookies.set(localDataNames.authData, JSON.stringify(data), { expires: 7 }); // expires: 7 ngày
+  } else {
+    // Xóa thông tin auth khỏi cookies
+    Cookies.remove(localDataNames.authData);
+  }
 };
