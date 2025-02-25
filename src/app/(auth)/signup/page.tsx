@@ -54,7 +54,7 @@ const SignupPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const api = `/client/register`;
+      const api = `/customer/register`;
       const res = await handleAPI(api, values, "post");
       dispatch(addAuth(res.data));
       setIsLoading(true);
@@ -69,7 +69,7 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="w-full pl-12 flex flex-col text-[#131118]">
+    <div className="w-full flex flex-col">
       <div className="font-bold text-3xl">Create New Account</div>
       <div className="font-light text-base text-[#A4A1AA] mb-8">
         Please enter details
@@ -138,7 +138,7 @@ const SignupPage = () => {
             />
             <div className="items-top flex space-x-2">
               <Checkbox
-                id="terms1"
+                id="term"
                 onCheckedChange={() => setIsChecked(!isChecked)}
               />
               <div className="grid gap-1.5 leading-none">

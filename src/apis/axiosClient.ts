@@ -1,14 +1,24 @@
 import axios from "axios";
 import queryString from "query-string";
-import { localDataNames } from "../constant/appInfor";
+import Cookies from "js-cookie"; // Import thư viện js-cookie
 
-const IPv4_Address = `192.168.1.244`;
-
+const IPv4_Address = `192.168.1.5`;
 const baseURL = `http://${IPv4_Address}:3001`;
 
 const getAccesstoken = () => {
-  const res = localStorage.getItem(localDataNames.authData);
-  return res ? JSON.parse(res).token : "";
+  const authDataCookie = Cookies.get("authData");
+
+  if (authDataCookie) {
+    try {
+      const authData = JSON.parse(authDataCookie);
+      return authData.token || "";
+    } catch (error) {
+      console.error("Error cookie:", error);
+      return "";
+    }
+  }
+
+  return "";
 };
 
 const axiosClient = axios.create({

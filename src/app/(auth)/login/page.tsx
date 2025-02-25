@@ -45,7 +45,7 @@ const LoginPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const api = `/client/login`;
+      const api = `/customer/login`;
       const res = await handleAPI(api, values, "post");
       dispatch(addAuth(res.data));
       setIsLoading(true);
@@ -60,7 +60,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="w-full pl-12 flex flex-col text-[#131118]">
+    <div className="w-full flex flex-col">
       <div className="font-bold text-3xl mb-8">Login to Krist</div>
       <div className="w-3/4">
         <Form {...form}>
@@ -98,11 +98,9 @@ const LoginPage = () => {
                 </FormItem>
               )}
             />
-
             <Button type="submit" disabled={isLoading}>
               Login
             </Button>
-
             <div className="text-sm text-center">
               Don't you have an account yet?&nbsp;
               <Link href={"/signup"} className="font-semibold hover:underline">
