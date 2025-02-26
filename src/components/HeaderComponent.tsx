@@ -27,7 +27,7 @@ const HeaderComponent = () => {
 
   return (
     <div className="flex flex-row justify-between items-center pb-5 max-w-7xl mx-auto p-4">
-      <Image alt="logo" src={images.logo} width={80} />
+      <Image alt="logo" src={images.logo} width={100} />
       <div className="flex flex-row items-center gap-x-3 max-md:hidden">
         <MenuBarComponent />
       </div>
