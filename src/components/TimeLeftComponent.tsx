@@ -20,12 +20,15 @@ const TimeLeftComponent = (props: Props) => {
       const value =
         convertToTimestamp(target, "DD/MM/YYYY") -
         Number(Date.now().toString());
+
       let days, hours, mins, secs;
+
       if (value > 0) {
         days = Math.floor(value / 86400 / 1000);
         hours = Math.floor((value % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         mins = Math.floor((value % (1000 * 60 * 60)) / (1000 * 60));
         secs = Math.floor((value % (1000 * 60)) / 1000);
+
         setTimeLeft({ days, hours, mins, secs });
       } else {
         setTimeLeft({ days: 0, hours: 0, mins: 0, secs: 0 });

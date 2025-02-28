@@ -37,7 +37,7 @@ const ContentComponent = () => {
   useEffect(() => {}, []);
 
   const getCategory = async () => {
-    const api = `/category`;
+    const api = `customer/get-categories`;
     const res = await handleAPI(api);
 
     const parentItems =
@@ -46,15 +46,15 @@ const ContentComponent = () => {
   };
 
   const getProducts = async () => {
-    const api = `/product?page=${page}&pageSize=${pageSize}`;
+    const api = `customer/get-products?page=${page}&pageSize=${pageSize}`;
     const res = await handleAPI(api);
     res.data.items && setProducts(res.data.items);
   };
 
   return (
     <div className="w-full gap-y-12 flex flex-col">
-      <div className="max-w-7xl mx-auto px-12 py-6">
-        <Carousel>
+      <div className="max-w-7xl mx-auto py-6">
+        <Carousel className="px-12 max-lg:px-6">
           <div className="flex w-full justify-between items-center mb-4">
             <div className="text-2xl max-lg:text-xl font-semibold">
               Shop by Categories
@@ -119,7 +119,9 @@ const ContentComponent = () => {
             of using Lorem Ispum is that it has a more-or-less normal
             distrisbution of letters.
           </div>
+
           <TimeLeftComponent target="23/06/2025" />
+
           <Link href={"/product"}>
             <Button>
               View All Product <ArrowRight size={16} />
@@ -132,6 +134,46 @@ const ContentComponent = () => {
           alt="deal"
           className="lg:w-1/2"
         />
+      </div>
+      <div className="bg-[#FAFAFB] w-full py-12">
+        <div className="max-w-7xl mx-auto w-full">
+          <Carousel className="px-12 max-lg:px-6">
+            <div className="flex w-full justify-between items-center mb-4">
+              <div className="text-2xl max-lg:text-xl font-semibold">
+                What our Customer say?
+              </div>
+              <div className="flex gap-x-1 relative mr-12">
+                <CarouselPrevious className="rounded-lg hover:bg-black buttonCarousel" />
+                <CarouselNext className="rounded-lg hover:bg-black buttonCarousel" />
+              </div>
+            </div>
+            <CarouselContent>
+              {category &&
+                category.map((item: CategoryModel) => (
+                  <CarouselItem
+                    key={item._id}
+                    className="lg:basis-1/5 max-lg:basis-1/2 max-md:basis-full cursor-pointer"
+                  >
+                    <Link
+                      href={"/"}
+                      className="flex flex-col items-center w-full rounded-sm h-64 relative"
+                    >
+                      <Image
+                        alt=""
+                        src={images.image1}
+                        className="h-64 rounded-sm"
+                      />
+                      <div className="absolute bottom-4 max-lg:bottom-6 w-full px-6 max-lg:px-16">
+                        <div className="bg-white text-xs rounded-lg w-full text-center align-bottom py-2 font-semibold z-10">
+                          {item.title}
+                        </div>
+                      </div>
+                    </Link>
+                  </CarouselItem>
+                ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
       </div>
     </div>
   );

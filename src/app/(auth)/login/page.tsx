@@ -98,6 +98,11 @@ const LoginPage = () => {
                 </FormItem>
               )}
             />
+            <div className="flex justify-end text-xs">
+              <Link href={"/reset-password"} className="hover:underline">
+                Forgot password?
+              </Link>
+            </div>
             <Button type="submit" disabled={isLoading}>
               Login
             </Button>
