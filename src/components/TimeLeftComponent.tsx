@@ -2,11 +2,11 @@ import { convertToTimestamp } from "@/utils/convertToTimeStamp";
 import { useEffect, useState } from "react";
 
 interface Props {
-  target: string;
+  targetDate: string;
 }
 
 const TimeLeftComponent = (props: Props) => {
-  const { target } = props;
+  const { targetDate } = props;
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -18,7 +18,7 @@ const TimeLeftComponent = (props: Props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       const value =
-        convertToTimestamp(target, "DD/MM/YYYY") -
+        convertToTimestamp(targetDate, "DD/MM/YYYY") -
         Number(Date.now().toString());
 
       let days, hours, mins, secs;
@@ -35,11 +35,11 @@ const TimeLeftComponent = (props: Props) => {
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [target]);
+  }, [targetDate]);
 
   const renderTime = (value: number, label: string) => {
     return (
-      <div className=" border border-slate-100 rounded-sm w-16 text-center py-2">
+      <div className=" border border-slate-200 rounded-sm w-16 text-center py-2">
         <div className="font-black text-2xl">{value}</div>
         <div className="font-semibold">{label}</div>
       </div>

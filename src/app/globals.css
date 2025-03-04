@@ -111,3 +111,9 @@
   animation-timeline: view();
   animation-range: entry 0% cover 30%;
 }
+
+.boxShadow {
+  -webkit-box-shadow: 8px 14px 24px -24px rgba(50, 48, 48, 1);
+  -moz-box-shadow: 8px 14px 24px -24px rgba(50, 48, 48, 1);
+  box-shadow: 8px 14px 24px -24px rgba(50, 48, 48, 1);
+}

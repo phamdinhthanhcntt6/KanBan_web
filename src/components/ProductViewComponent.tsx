@@ -64,8 +64,7 @@ const ProductViewComponent = (props: Props) => {
             </div>
           </div>
 
-          {/* Button "Add to cart" */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 py-2 bg-white text-center rounded-lg mb-4">
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 py-2 bg-white text-center rounded-lg mb-4 font-bold text-sm">
             <Link href={`/`}>Add to cart</Link>
           </div>
         </div>

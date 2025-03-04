@@ -1,6 +1,16 @@
 "use client";
 
 import handleAPI from "@/apis/handleApi";
+import { images } from "@/assets/image";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,11 +23,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "iconsax-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -28,11 +38,9 @@ const ResetPasswordPage = () => {
 
   const [email, setEmail] = useState<any>("");
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const router = useRouter();
-
-  console.log(email);
-
-  const dispatch = useDispatch();
 
   const formSchema = z.object(
     isChecked
@@ -61,9 +69,8 @@ const ResetPasswordPage = () => {
     try {
       if (isChecked) {
         const api = `customer/reset-password?email=${email}`;
-        const res = handleAPI(api, values, "put");
-        toast.success("Updated account");
-        router.push("/login");
+        await handleAPI(api, values, "put");
+        setIsOpen(true);
       } else {
         const api = `/customer/check-account`;
         await handleAPI(api, values, "post");
@@ -152,12 +159,44 @@ const ResetPasswordPage = () => {
                 </div>
               </>
             )}
-            <Button type="submit" disabled={isLoading}>
-              Confirm
+            <Button
+              type="submit"
+              onClick={() => {
+                isChecked && setIsOpen(true);
+              }}
+              disabled={isLoading}
+            >
+              {!isChecked ? "Verify" : "Confim"}
             </Button>
           </form>
         </Form>
       </div>
+      <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+        <AlertDialogContent className="w-1/5">
+          <AlertDialogHeader className="text-center w-full flex">
+            <div className="flex items-center justify-center rounded-full">
+              <div className="flex items-center justify-center rounded-full bg-[#1311180D] w-24 h-24">
+                <div className="flex items-center justify-center rounded-full bg-[#1311181A] w-20 h-20">
+                  <div className="flex items-center justify-center bg-[#131118] rounded-full w-16 h-16">
+                    <Image alt="tick" src={images.tick} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <AlertDialogTitle className="mx-auto flex">
+              Password Changed Successfully
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-sm mx-auto flex">
+              Your password has been updated successfully
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction className="w-full">
+              <Link href={"/login"}>Back to Login</Link>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
