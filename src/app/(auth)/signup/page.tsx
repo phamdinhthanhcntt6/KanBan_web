@@ -71,7 +71,7 @@ const SignupPage = () => {
   return (
     <div className="w-full flex flex-col">
       <div className="font-bold text-3xl">Create New Account</div>
-      <div className="font-light text-base text-[#A4A1AA] mb-8">
+      <div className="font-normal text-base text-[#A4A1AA] mb-8">
         Please enter details
       </div>
       <div className="w-3/4">

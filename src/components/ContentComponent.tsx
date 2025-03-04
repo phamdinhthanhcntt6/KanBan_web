@@ -6,6 +6,7 @@ import handleAPI from "@/apis/handleApi";
 import { images } from "@/assets/image";
 import ProductViewComponent from "@/components/ProductViewComponent";
 import TimeLeftComponent from "@/components/TimeLeftComponent";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -14,6 +15,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { advantageData } from "@/data/advantageData";
 import { commentData } from "@/data/commentData";
 import { CategoryModel } from "@/models/CategoryModel";
 import { CommentModel } from "@/models/CommnetModel";
@@ -21,8 +23,6 @@ import { ProductModel } from "@/models/ProductModel";
 import { ArrowRight, Box, Card, Headphone, MoneyRecive } from "iconsax-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { advantageData } from "@/data/advantageData";
 
 const ContentComponent = () => {
   const [category, setCategory] = useState<CategoryModel[]>([]);
@@ -75,9 +75,9 @@ const ContentComponent = () => {
     Card,
   };
 
-  return isLoading ? (
-    <></>
-  ) : (
+  if (isLoading) return <></>;
+
+  return (
     <div className="w-full gap-y-12 flex flex-col">
       <div className="max-w-7xl mx-auto py-6">
         <Carousel className="px-12 max-lg:px-6">

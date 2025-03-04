@@ -61,7 +61,10 @@ const LoginPage = () => {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="font-bold text-3xl mb-8">Login to Krist</div>
+      <div className="font-bold text-3xl">Welcome</div>
+      <div className="font--normal text-base text-[#A4A1AA] mb-8">
+        Please login here
+      </div>
       <div className="w-3/4">
         <Form {...form}>
           <form

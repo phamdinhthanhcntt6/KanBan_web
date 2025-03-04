@@ -16,14 +16,23 @@ import { useEffect, useState } from "react";
 const MenuBarComponent = () => {
   const [category, setCategory] = useState<CategoryModel[]>([]);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
     getData();
   }, []);
 
   const getData = async () => {
-    const api = `/category`;
-    const res = await handleAPI(api);
-    setCategory(getTreeData(res.data));
+    try {
+      setIsLoading(true);
+      const api = `/customer/get-categories`;
+      const res = await handleAPI(api);
+      setCategory(getTreeData(res.data));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const renderMenuChild = () => {
@@ -54,6 +63,8 @@ const MenuBarComponent = () => {
       </div>
     );
   };
+
+  if (isLoading) return <></>;
 
   return (
     <Menubar className="w-max borderNone">
