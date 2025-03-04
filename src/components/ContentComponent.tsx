@@ -209,19 +209,22 @@ const ContentComponent = () => {
         <div className="flex mx-auto text-2xl font-semibold">
           Our Instagram Stories
         </div>
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full max-lg:flex-col max-lg:items-center max-lg:gap-y-1">
           <Image alt="story" src={images.imageStory} />
           <Image alt="story" src={images.imageStory} />
           <Image alt="story" src={images.imageStory} />
           <Image alt="story" src={images.imageStory} />
         </div>
       </div>
-      <div className="max-w-7xl mx-auto pt-12 w-full flex flex-row px-12 gap-y-6 justify-between">
+      <div className="max-w-7xl mx-auto pt-12 w-full flex flex-row px-12 gap-y-6 justify-between max-lg:grid max-lg:grid-cols-2 max-md:grid-cols-1">
         {advantageData.map((item: any) => {
           const IconComponent =
             iconAdvantages[item.icon as keyof typeof iconAdvantages];
           return (
-            <div key={item.key} className="flex flex-col gap-y-2">
+            <div
+              key={item.key}
+              className="flex flex-col gap-y-2 max-lg:w-1/2 max-md:w-full"
+            >
               <IconComponent size="32" />
               <div className="font-bold text-xl">{item.label}</div>
               <p>{item.decs}</p>

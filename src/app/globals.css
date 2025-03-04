@@ -117,3 +117,17 @@
   -moz-box-shadow: 8px 14px 24px -24px rgba(50, 48, 48, 1);
   box-shadow: 8px 14px 24px -24px rgba(50, 48, 48, 1);
 }
+
+.input-email:active {
+  border: none !important;
+}
+
+.input-email {
+  border: none !important;
+}
+
+.no-border:focus {
+  border-top: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}

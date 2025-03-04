@@ -66,7 +66,7 @@ const TimeLeftComponent = (props: Props) => {
   ];
 
   return (
-    <div className="flex gap-x-4 flex-row">
+    <div className="flex gap-x-4 flex-row max-md:gap-x-2">
       {DealTime.map((item: { label: string; value: number }) => (
         <div key={item.label}>{renderTime(item.value, item.label)}</div>
       ))}
