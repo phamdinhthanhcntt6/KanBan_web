@@ -118,7 +118,7 @@ const ContentComponent = () => {
         </Carousel>
       </div>
 
-      <div className={`max-w-7xl  mx-auto pt-12 w-full flex flex-col px-12`}>
+      <div className={`max-w-7xl mx-auto pt-12 w-full flex flex-col px-12`}>
         <div className="text-center flex mx-auto text-2xl font-semibold mb-12 duration-200">
           Our Bestseller
         </div>
@@ -136,7 +136,7 @@ const ContentComponent = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto pt-12 w-full flex flex-row px-12 gap-x-6 h-max max-lg:flex-col max-lg:gap-y-6">
+      <div className="max-w-7xl mx-auto pt-12 w-full flex flex-row px-12 max-lg:px-6 gap-x-6 h-max max-lg:flex-col max-lg:gap-y-6">
         <div className="lg:w-1/2 h-max my-auto gap-y-8 flex flex-col">
           <div className="text-2xl font-semibold">Deals of the Month</div>
           <div className="text-sm">
@@ -205,18 +205,18 @@ const ContentComponent = () => {
           </Carousel>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto pt-12 w-full flex flex-col px-12 gap-y-6">
+      <div className="max-w-7xl mx-auto pt-12 w-full flex flex-col px-12 max-lg:px-6 gap-y-6">
         <div className="flex mx-auto text-2xl font-semibold">
           Our Instagram Stories
         </div>
-        <div className="flex justify-between w-full max-lg:flex-col max-lg:items-center max-lg:gap-y-1">
+        <div className="flex justify-between mx-auto w-full max-lg:flex-col max-lg:items-center max-lg:gap-1 max-lg:grid max-lg:grid-cols-2">
           <Image alt="story" src={images.imageStory} />
           <Image alt="story" src={images.imageStory} />
           <Image alt="story" src={images.imageStory} />
           <Image alt="story" src={images.imageStory} />
         </div>
       </div>
-      <div className="max-w-7xl mx-auto pt-12 w-full flex flex-row px-12 gap-y-6 justify-between max-lg:grid max-lg:grid-cols-2 max-md:grid-cols-1">
+      <div className="max-w-7xl mx-auto pt-12 w-full flex flex-row px-12 max-lg:px-6 gap-y-6 justify-between max-lg:grid max-lg:grid-cols-2 max-md:grid-cols-1">
         {advantageData.map((item: any) => {
           const IconComponent =
             iconAdvantages[item.icon as keyof typeof iconAdvantages];

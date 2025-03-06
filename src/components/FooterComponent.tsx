@@ -5,8 +5,13 @@ import {
   ArrowDown2,
   ArrowRight,
   CallCalling,
+  Facebook,
+  Google,
+  Instagram,
   Location,
+  Paypal,
   Sms,
+  Youtube,
 } from "iconsax-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -60,9 +65,10 @@ const service = [
 const FooterComponent = () => {
   const [email, setEmail] = useState<string>("");
 
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisibleInformation, setIsVisibleInformation] =
+    useState<boolean>(false);
 
-  const [isVisible1, setIsVisible1] = useState<boolean>(true);
+  const [isVisibleService, setIsVisibleService] = useState<boolean>(false);
 
   const onSubmit = (val: string) => {
     console.log(val);
@@ -70,7 +76,7 @@ const FooterComponent = () => {
 
   return (
     <div className="mt-20 w-full bg-[#131118] text-white">
-      <div className="max-w-7xl flex w-full mx-auto p-12 justify-between max-lg:flex-col max-lg:gap-y-4">
+      <div className="max-w-7xl flex w-full mx-auto p-12 max-lg:p-6 justify-between max-lg:flex-col max-lg:gap-y-4">
         <div className="flex flex-col gap-y-4 max-lg:w-full">
           <div className="text-4xl font-bold">Krist</div>
           <div className="flex items-center gap-x-2">
@@ -92,15 +98,19 @@ const FooterComponent = () => {
             <div className="font-bold underline">Information</div>
             <ArrowDown2
               size={24}
-              className={`${isVisible && "rotate-180"}`}
-              onClick={() => setIsVisible(!isVisible)}
+              className={`${
+                isVisibleInformation && "rotate-180"
+              } duration-500 lg:hidden`}
+              onClick={() => setIsVisibleInformation(!isVisibleInformation)}
             />
           </div>
           {information.map((item: { href: string; title: string }) => (
             <Link
               href={item.href}
               key={item.href}
-              className={`hover:underline ${!isVisible && "hidden"}`}
+              className={`hover:underline ${
+                isVisibleInformation && "hidden"
+              } max-lg:hidden`}
             >
               {item.title}
             </Link>
@@ -111,17 +121,21 @@ const FooterComponent = () => {
             <div className="font-bold underline">Service</div>
             <ArrowDown2
               size={24}
-              className={`${isVisible1 && "rotate-180"}`}
+              className={`${
+                isVisibleService && "rotate-180"
+              } duration-500 lg:hidden`}
               onClick={() => {
-                setIsVisible1(!isVisible1);
+                setIsVisibleService(!isVisibleService);
               }}
-            ></ArrowDown2>
+            />
           </div>
           {service.map((item: { href: string; title: string }) => (
             <Link
               href={item.href}
               key={item.href}
-              className={`hover:underline ${!isVisible1 && "hidden"}`}
+              className={`hover:underline ${
+                isVisibleService && "hidden"
+              } max-lg:hidden`}
             >
               {item.title}
             </Link>
@@ -136,6 +150,7 @@ const FooterComponent = () => {
           <div className="items-center flex flex-row border-white border p-1 rounded-lg max-lg:w-1/2 max-md:w-full">
             <Sms size={32} />
             <Input
+              placeholder="Email"
               type="email"
               className="input-email no-border"
               onChange={(val) => {
@@ -150,6 +165,25 @@ const FooterComponent = () => {
               }}
             />
           </div>
+        </div>
+      </div>
+      <div className="px-12 w-full flex mx-auto max-w-7xl">
+        <div className="w-full h-[2px] bg-white" />
+      </div>
+      <div className="w-full max-w-7xl flex mx-auto py-2 justify-between px-12">
+        <div className="flex gap-x-2">
+          <div className="px-1 py-1 bg-white rounded-md cursor-pointer">
+            <Paypal size={24} color="black" />
+          </div>
+          <div className="px-1 py-1 bg-white rounded-md cursor-pointer">
+            <Google size={24} color="black" />
+          </div>
+        </div>
+        <div>2025 Krist All Rights are reserved</div>
+        <div className="flex gap-x-2">
+          <Facebook size={24} />
+          <Instagram size={24} />
+          <Youtube size={24} />
         </div>
       </div>
     </div>

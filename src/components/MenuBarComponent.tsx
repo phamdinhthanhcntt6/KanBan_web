@@ -37,12 +37,12 @@ const MenuBarComponent = () => {
 
   const renderMenuChild = () => {
     return (
-      <div className="w-max">
-        <div className="grid grid-cols-4">
+      <div className="lg:w-max max-lg:overflow-y-scroll max-lg:h-[700px] max-lg:w-screen">
+        <div className="grid grid-cols-4 max-lg:grid-cols-2 max-lg:w-full ">
           {category &&
             category.map((item: CategoryModel) => (
-              <div key={item.id} className="w-full mx-2 h-max p-1">
-                <div className="font-bold text-[#131118] px-1 underline">
+              <div key={item.id} className="w-full mx-2 h-max">
+                <div className="font-bold text-[#131118] px-1 lg:p-1 underline">
                   {item.title}
                 </div>
                 <div>
@@ -51,7 +51,7 @@ const MenuBarComponent = () => {
                       <Link
                         href={`/category/${child._id}`}
                         key={child._id}
-                        className="font-normal flex flex-row text-[#131118] hover:font-semibold p-1 w-full hover:bg-slate-200 hover:rounded-md"
+                        className="font-normal flex flex-row text-[#131118] hover:font-semibold lg:p-1 p-[1px] w-full hover:bg-slate-200 hover:rounded-md"
                       >
                         {child.title}
                       </Link>
@@ -67,30 +67,32 @@ const MenuBarComponent = () => {
   if (isLoading) return <></>;
 
   return (
-    <Menubar className="w-max borderNone">
+    <Menubar className="w-max borderNone flex max-lg:flex-col max-lg:w-screen">
       <MenubarMenu>
-        <MenubarTrigger>
+        <MenubarTrigger className=" max-lg:w-screen">
           <Link href={"/"}>Home</Link>
         </MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger className="cursor-pointer gap-x-1 flex">
+        <MenubarTrigger className="cursor-pointer gap-x-1 flex max-lg:w-screen">
           Shop <ArrowDown2 size={12} />
         </MenubarTrigger>
-        <MenubarContent>{renderMenuChild()}</MenubarContent>
+        <MenubarContent className="max-lg:w-screen">
+          {renderMenuChild()}
+        </MenubarContent>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger>
+        <MenubarTrigger className="max-lg:w-screen">
           <Link href={"/our-story"}>Our Story</Link>
         </MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger>
+        <MenubarTrigger className="max-lg:w-screen">
           <Link href={"/blog"}>Blog</Link>
         </MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger>
+        <MenubarTrigger className="max-lg:w-screen">
           <Link href={"/contact-us"}>Contact Us</Link>
         </MenubarTrigger>
       </MenubarMenu>
