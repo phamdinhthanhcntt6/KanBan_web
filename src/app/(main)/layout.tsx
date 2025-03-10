@@ -7,11 +7,12 @@ interface Props {
 }
 
 const MainLayout = (props: Props) => {
+  const { children } = props;
   return (
     <div>
       <div className="p-4 max-w-7xl mx-auto flex flex-col">
         <HeaderComponent />
-        {props.children}
+        {children}
       </div>
       <FooterComponent />
     </div>

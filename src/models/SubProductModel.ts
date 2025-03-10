@@ -8,5 +8,6 @@ export interface SubProductModel {
   _id: string;
   createdAt: string;
   updatedAt: string;
+  discount: number;
   __v: number;
 }

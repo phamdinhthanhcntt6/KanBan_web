@@ -11,33 +11,23 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { authSelector, removeAuth } from "@/redux/reducers/authReducer";
-import {
-  HambergerMenu,
-  Heart,
-  Logout,
-  ShoppingCart,
-  User,
-} from "iconsax-react";
+import { Bag2, HambergerMenu, Heart, Logout, User } from "iconsax-react";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "sonner";
 
 const HeaderComponent = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const dispatch = useDispatch();
-
-  const auth = useSelector(authSelector);
-
   const router = useRouter();
+  const { auth, removeAuth } = useAuthStore();
 
-  const handleLogout = async () => {
-    dispatch(removeAuth({}));
+  const handleLogout = () => {
+    removeAuth();
     toast.success("Logged out successfully");
     router.push("/login");
   };
@@ -58,7 +48,10 @@ const HeaderComponent = () => {
       <div className="flex flex-row gap-x-4 items-center max-lg:hidden">
         <Search size="24" className="cursor-pointer" />
         <Heart size="24" className="cursor-pointer" />
-        <ShoppingCart size="24" className="cursor-pointer" />
+        <div className="relative">
+          <div className="rounded-full bg-red-400 absolute -top-1 -right-1 p-1 flex items-center justify-center font-semibold" />
+          <Bag2 size="24" className="cursor-pointer" />
+        </div>
         {auth ? (
           <div className="flex items-center">
             <DropdownMenu>
@@ -69,8 +62,10 @@ const HeaderComponent = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem className="flex gap-x-1 cursor-pointer items-center">
-                  <User size={16} />
-                  Profile
+                  <Link href={"/profile"} className="flex gap-x-1 items-center">
+                    <User size={16} />
+                    Profile
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
                   <div

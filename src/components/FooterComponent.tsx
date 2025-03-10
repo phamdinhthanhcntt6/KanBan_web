@@ -168,7 +168,7 @@ const FooterComponent = () => {
         </div>
       </div>
       <div className="px-12 w-full flex mx-auto max-w-7xl">
-        <div className="w-full h-[2px] bg-white" />
+        <div className="w-full h-[1px] bg-white" />
       </div>
       <div className="w-full max-w-7xl flex mx-auto py-2 justify-between px-12">
         <div className="flex gap-x-2">
@@ -181,9 +181,9 @@ const FooterComponent = () => {
         </div>
         <div>2025 Krist All Rights are reserved</div>
         <div className="flex gap-x-2">
-          <Facebook size={24} />
-          <Instagram size={24} />
-          <Youtube size={24} />
+          <Facebook size={24} className="cursor-pointer" />
+          <Instagram size={24} className="cursor-pointer" />
+          <Youtube size={24} className="cursor-pointer" />
         </div>
       </div>
     </div>

@@ -1,7 +1,11 @@
-import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile",
+};
 
 const ProfilePage = () => {
-  return <div>Profile</div>;
+  return <div></div>;
 };
 
 export default ProfilePage;

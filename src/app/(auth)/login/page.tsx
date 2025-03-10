@@ -11,22 +11,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addAuth } from "@/redux/reducers/authReducer";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useAuthStore } from "@/store/useAuthStore";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
-
-  const dispatch = useDispatch();
+  const { addAuth } = useAuthStore();
 
   const formSchema = z.object({
     email: z.string().email(),
@@ -45,15 +43,14 @@ const LoginPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsLoading(true);
       const api = `/customer/login`;
       const res = await handleAPI(api, values, "post");
-      dispatch(addAuth(res.data));
-      setIsLoading(true);
-      toast.success("Log in successfully!");
+      addAuth(res.data);
+      toast.success("Login successful");
       router.push("/");
     } catch (error: any) {
-      console.log(error);
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }

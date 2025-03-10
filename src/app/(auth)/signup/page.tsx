@@ -12,15 +12,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addAuth } from "@/redux/reducers/authReducer";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const SignupPage = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -29,7 +28,7 @@ const SignupPage = () => {
 
   const router = useRouter();
 
-  const dispatch = useDispatch();
+  const { addAuth } = useAuthStore();
 
   const formSchema = z.object({
     firstname: z.string().min(1, {
@@ -54,17 +53,12 @@ const SignupPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const api = `/customer/register`;
-      const res = await handleAPI(api, values, "post");
-      dispatch(addAuth(res.data));
-      setIsLoading(true);
-      toast.success("Sign up successfully!");
+      const res = await handleAPI("/customer/register", values, "post");
+      addAuth(res.data);
+      toast.success("Signup successful");
       router.push("/");
     } catch (error: any) {
-      console.log(error);
-      toast.error(error.message);
-    } finally {
-      setIsLoading(false);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     }
   };
 
