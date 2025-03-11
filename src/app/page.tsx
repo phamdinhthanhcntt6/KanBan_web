@@ -1,7 +1,7 @@
-import BannerComponent from "@/components/BannerComponent";
-import ContentComponent from "@/components/ContentComponent";
-import FooterComponent from "@/components/FooterComponent";
-import HeaderComponent from "@/components/HeaderComponent";
+import BannerComponent from "@/components/banner/BannerComponent";
+import ContentComponent from "@/components/content/ContentComponent";
+import FooterComponent from "@/components/footer/FooterComponent";
+import HeaderComponent from "@/components/header/HeaderComponent";
 
 import type { Metadata } from "next";
 

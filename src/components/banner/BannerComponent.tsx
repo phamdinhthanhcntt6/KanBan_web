@@ -42,7 +42,13 @@ const BannerComponent = () => {
 
   return (
     <div className="px-4 max-w-7xl w-full mx-auto ">
-      <Carousel plugins={[plugin.current]} className="w-full">
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+        plugins={[plugin.current]}
+        className="w-full"
+      >
         <CarouselContent>
           {promotion &&
             promotion.length > 0 &&
@@ -65,7 +71,9 @@ const BannerComponent = () => {
                   <div className="font-bold text-4xl max-lg:text-xl">
                     {promotion.description}
                   </div>
-                  <div className="uppercase max-lg:text-sm">Up to 40% off</div>
+                  <div className="uppercase max-lg:text-sm">
+                    Up to {promotion.value}% off
+                  </div>
                   <Button className="w-max">
                     <Link
                       href={"/"}

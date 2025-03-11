@@ -5,12 +5,6 @@ interface Props {
   children: React.ReactNode;
 }
 
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Auth",
-};
-
 const AuthLayout = (props: Props) => {
   const { children } = props;
   return (

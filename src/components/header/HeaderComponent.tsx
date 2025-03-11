@@ -1,7 +1,7 @@
 "use client";
 
 import { images } from "@/assets/image";
-import MenuBarComponent from "@/components/MenuBarComponent";
+import MenuBarComponent from "@/components/header/MenuBarComponent";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
