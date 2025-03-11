@@ -1,54 +1,19 @@
-"use client";
-
 import handleAPI from "@/apis/handleApi";
+import CarouselWrapperComponent from "@/components/banner/CarouselWrapperComponent";
 import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import { CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { PromotionModel } from "@/models/PromotionModel";
-import Autoplay from "embla-carousel-autoplay";
 import { ArrowRight } from "iconsax-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
-const BannerComponent = () => {
-  const [promotion, setPromotion] = useState<PromotionModel[]>([]);
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    getPromotion();
-  }, []);
-
-  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
-
-  const getPromotion = async () => {
-    try {
-      setIsLoading(true);
-      const api = `/promotion`;
-      const res = await handleAPI(api);
-      setPromotion(res.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) return <></>;
+const BannerComponent = async () => {
+  const res = await handleAPI("/promotion");
+  const promotion = res.data;
 
   return (
     <div className="px-4 max-w-7xl w-full mx-auto ">
-      <Carousel
-        opts={{
-          loop: true,
-        }}
-        plugins={[plugin.current]}
-        className="w-full"
-      >
+      <CarouselWrapperComponent>
         <CarouselContent>
           {promotion &&
             promotion.length > 0 &&
@@ -60,7 +25,7 @@ const BannerComponent = () => {
                 <Image
                   alt="banner"
                   src={promotion.images[0]}
-                  className="w-full border-2 rounded-md h-full"
+                  className="w-full border-2 rounded-md h-full aspect-video"
                   width={700}
                   height={400}
                 />
@@ -86,7 +51,7 @@ const BannerComponent = () => {
               </CarouselItem>
             ))}
         </CarouselContent>
-      </Carousel>
+      </CarouselWrapperComponent>
     </div>
   );
 };

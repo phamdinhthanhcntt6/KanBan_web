@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Home | Krist",
+  description: "Krist",
 };
 
 const HomePage = () => {

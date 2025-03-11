@@ -1,3 +1,5 @@
+"use client";
+
 import { convertToTimestamp } from "@/utils/convertToTimeStamp";
 import { useEffect, useState } from "react";
 

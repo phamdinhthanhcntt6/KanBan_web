@@ -53,12 +53,15 @@ const SignupPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsLoading(true);
       const res = await handleAPI("/customer/register", values, "post");
       addAuth(res.data);
       toast.success("Signup successful");
       router.push("/");
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 

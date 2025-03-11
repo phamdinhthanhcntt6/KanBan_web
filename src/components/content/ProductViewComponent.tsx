@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { truncated } from "../utils/truncatedText";
+
 import { ArrowSwapHorizontal, Eye, Star1 } from "iconsax-react";
+import { truncated } from "@/utils/truncatedText";
 
 interface Props {
   title: string;
@@ -20,6 +21,7 @@ const ProductViewComponent = (props: Props) => {
 
   return (
     <div
+      key={id}
       className={`flex flex-col items-center mx-2 motion-translate-y-in-100`}
     >
       <div

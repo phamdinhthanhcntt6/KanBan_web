@@ -40,8 +40,6 @@ const ResetPasswordPage = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const router = useRouter();
-
   const formSchema = z.object(
     isChecked
       ? {
@@ -140,7 +138,7 @@ const ResetPasswordPage = () => {
             {!isChecked && (
               <>
                 <div className="text-sm text-center">
-                  Don't you have an account yet?&nbsp;
+                  Don&apos;t you have an account yet?&nbsp;
                   <Link
                     href={"/signup"}
                     className="font-semibold hover:underline"
