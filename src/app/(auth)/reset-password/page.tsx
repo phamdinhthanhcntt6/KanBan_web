@@ -25,7 +25,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "iconsax-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -36,7 +35,7 @@ const ResetPasswordPage = () => {
 
   const [isChecked, setIsChecked] = useState(false);
 
-  const [email, setEmail] = useState<any>("");
+  const [email, setEmail] = useState<string>("");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 

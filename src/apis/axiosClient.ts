@@ -1,6 +1,6 @@
 import axios from "axios";
-import queryString from "query-string";
 import Cookies from "js-cookie"; // Import thư viện js-cookie
+import queryString from "query-string";
 
 const IPv4_Address = `192.168.1.2`;
 const baseURL = `http://${IPv4_Address}:3001`;
@@ -26,6 +26,7 @@ const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
+// eslint-disable-next-line
 axiosClient.interceptors.request.use(async (config: any) => {
   const accesstoken = getAccesstoken();
   config.headers = {

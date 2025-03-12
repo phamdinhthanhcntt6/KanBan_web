@@ -37,14 +37,8 @@ const MenuBarComponent = () => {
 
   const renderMenuChild = () => {
     return (
-      <div
-        className="lg:w-max max-lg:overflow-y-scroll max-lg:h-[700px] max-lg:w-screen"
-        key={Math.random() * 1000}
-      >
-        <div
-          className="grid grid-cols-4 max-lg:grid-cols-2 max-lg:w-full"
-          key={Math.random() * 1000}
-        >
+      <div className="lg:w-max max-lg:overflow-y-scroll max-lg:h-[700px] max-lg:w-screen">
+        <div className="grid grid-cols-4 max-lg:grid-cols-2 max-lg:w-full">
           {category &&
             category.map((item: CategoryModel) => (
               <div key={item._id} className="w-full mx-2 h-max">
@@ -55,8 +49,8 @@ const MenuBarComponent = () => {
                   {item.children &&
                     item.children.map((child: CategoryModel, index: number) => (
                       <Link
-                        key={`${child.id}${item._id}${index}`}
-                        href={`/category/${child.id}`}
+                        key={child._id}
+                        href={`/category/${child._id}`}
                         className="font-normal flex flex-row text-[#131118] hover:font-semibold lg:p-1 p-[1px] w-full hover:bg-slate-200 hover:rounded-md"
                       >
                         {child.title}

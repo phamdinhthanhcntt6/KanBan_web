@@ -15,4 +15,5 @@ export interface ProductModel {
   images: string[];
   _v: number;
   rating: number;
+  price: number[];
 }

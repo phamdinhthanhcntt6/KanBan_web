@@ -4,26 +4,23 @@ import handleAPI from "@/apis/handleApi";
 import ProductViewComponent from "@/components/content/ProductViewComponent";
 import { ProductModel } from "@/models/ProductModel";
 import React, { useEffect, useState } from "react";
+import { number } from "zod";
 
 const ProductListComponent = () => {
   const [products, setProducts] = useState<ProductModel[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [page] = useState<number>(1);
-
-  const [pageSize] = useState(8);
-
   useEffect(() => {
-    getProducts();
+    getBestSellerProducts();
   }, []);
 
-  const getProducts = async () => {
+  const getBestSellerProducts = async () => {
     setIsLoading(true);
     try {
-      const api = `customer/get-products?page=${page}&pageSize=${pageSize}`;
+      const api = `/customer/best-seller`;
       const res = await handleAPI(api);
-      res.data.items && setProducts(res.data.items);
+      res.data && setProducts(res.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -31,16 +28,19 @@ const ProductListComponent = () => {
     }
   };
 
+  if (isLoading) return;
+
   return (
-    <div className="grid grid-cols-4 max-lg:grid-cols-2 max-md:grid-cols-1 gap-6">
+    <div className="grid grid-cols-4 max-lg:grid-cols-2 max-md:grid-cols-1 gap-6 px-12">
       {products &&
-        products.map((item: ProductModel) => (
+        products.map((item: ProductModel, index: number) => (
           <ProductViewComponent
             id={item._id}
             src={item.images[0]}
-            key={item._id}
             title={item.title}
             description={item.description}
+            price={item.price}
+            key={item._id}
           />
         ))}
     </div>

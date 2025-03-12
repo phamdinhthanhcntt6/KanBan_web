@@ -4,24 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-import { ArrowSwapHorizontal, Eye, Star1 } from "iconsax-react";
 import { truncated } from "@/utils/truncatedText";
+import { ArrowSwapHorizontal, Eye, Star1 } from "iconsax-react";
+import { replaceName } from "@/utils/replaceName";
 
 interface Props {
   title: string;
   src: string;
   id: string;
   description: string;
+  price: number[];
 }
 
 const ProductViewComponent = (props: Props) => {
-  const { title, src, id, description } = props;
+  const { title, src, id, description, price } = props;
 
   const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
     <div
-      key={id}
+      key={`Key${id}`}
       className={`flex flex-col items-center mx-2 motion-translate-y-in-100`}
     >
       <div
@@ -40,7 +42,9 @@ const ProductViewComponent = (props: Props) => {
           width={160}
           height={120}
           loading="lazy"
-          className={`bg-slate-300 w-full h-72 ${isHover && "opacity-75"}`}
+          className={`bg-slate-300 w-full h-72 ${
+            isHover && "opacity-75"
+          } rounded-lg`}
         />
         <div
           className={`${!isHover && "hidden"} absolute inset-0 flex flex-col`}
@@ -58,12 +62,12 @@ const ProductViewComponent = (props: Props) => {
             >
               <ArrowSwapHorizontal size="16" color="#555555" />
             </div>
-            <div
+            <Link
+              href={`/product/${replaceName(title)}/${id}`}
               className="p-2 bg-white rounded-full cursor-pointer"
-              onClick={() => {}}
             >
               <Eye size="16" color="#555555" />
-            </div>
+            </Link>
           </div>
 
           <div
@@ -75,12 +79,23 @@ const ProductViewComponent = (props: Props) => {
         </div>
       </div>
 
-      <div className="text-start flex w-full flex-col">
-        <div className="font-semibold">{title}</div>
+      <Link
+        href={`/product/${replaceName(title)}/${id}`}
+        className="text-start flex w-full flex-col cursor-pointer"
+      >
+        <div className="font-bold">{title}</div>
         <div className="text-sm font-normal text-slate-600">
           {truncated(description, 30)}
         </div>
-      </div>
+        <div>
+          {price.length > 0 && (
+            <div className="flex">
+              &#36;<div>{price[0]}</div>&nbsp;&#8722;&nbsp;
+              <div>{price[1]}</div>
+            </div>
+          )}
+        </div>
+      </Link>
     </div>
   );
 };

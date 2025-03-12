@@ -28,7 +28,9 @@ const HeaderComponent = () => {
           <div className="rounded-full bg-red-400 absolute -top-1 -right-1 p-1 flex items-center justify-center font-semibold" />
           <Bag2 size="24" className="cursor-pointer" />
         </div>
-        <AvatarComponent />
+        <div>
+          <AvatarComponent />
+        </div>
       </div>
       <MenuMobileComponent />
     </div>

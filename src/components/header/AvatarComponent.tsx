@@ -12,11 +12,17 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { Logout, User } from "iconsax-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const AvatarComponent = () => {
   const router = useRouter();
   const { auth, removeAuth } = useAuthStore();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleLogout = () => {
     removeAuth();
@@ -24,9 +30,11 @@ const AvatarComponent = () => {
     router.push("/login");
   };
 
+  if (!isClient) return null;
+
   return (
     <>
-      {auth ? (
+      {auth.token ? (
         <div className="flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger>

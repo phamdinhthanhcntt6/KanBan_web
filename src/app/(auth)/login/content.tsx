@@ -107,7 +107,7 @@ const LoginContent = () => {
               Login
             </Button>
             <div className="text-sm text-center">
-              Don't you have an account yet?&nbsp;
+              Don&apos;t you have an account yet?&nbsp;
               <Link href={"/signup"} className="font-semibold hover:underline">
                 Sign up
               </Link>

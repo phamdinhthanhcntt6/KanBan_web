@@ -4,7 +4,7 @@ export interface SubProductModel {
   color: string;
   price: number;
   quantity: number;
-  images: any[];
+  images: string[];
   _id: string;
   createdAt: string;
   updatedAt: string;

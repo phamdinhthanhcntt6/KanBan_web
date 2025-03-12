@@ -18,8 +18,6 @@ const CategoryCarouselComponent = async () => {
   const category =
     res.data && res.data.filter((item: any) => item.parentId === "");
 
-  console.log(category);
-
   return (
     <Carousel className="px-12 max-lg:px-6">
       <div className="flex w-full justify-between items-center mb-4">
