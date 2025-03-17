@@ -13,18 +13,23 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { useAuthStore } from "@/store/useAuthStore";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
 
 const LoginContent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const { addAuth } = useAuthStore();
+  const searchParams = useSearchParams();
+
+  const id = searchParams.get("id");
+  const name = searchParams.get("name");
 
   const formSchema = z.object({
     email: z.string().email(),
@@ -48,7 +53,7 @@ const LoginContent = () => {
       const res = await handleAPI(api, values, "post");
       addAuth(res.data);
       toast.success("Login successful");
-      router.push("/");
+      id && name ? router.push(`/product/${name}/${id}`) : router.push("/");
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {

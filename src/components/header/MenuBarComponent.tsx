@@ -12,11 +12,14 @@ import { getTreeData } from "@/utils/getTreeData";
 import { ArrowDown2 } from "iconsax-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const MenuBarComponent = () => {
   const [category, setCategory] = useState<CategoryModel[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const pathname = usePathname();
 
   useEffect(() => {
     getData();
@@ -69,12 +72,18 @@ const MenuBarComponent = () => {
   return (
     <Menubar className="w-max borderNone flex max-lg:flex-col max-lg:w-screen">
       <MenubarMenu key="home">
-        <MenubarTrigger className="max-lg:w-screen">
+        <MenubarTrigger
+          className={`max-lg:w-screen ${pathname === "/" && "bg-slate-200"}`}
+        >
           <Link href={"/"}>Home</Link>
         </MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu key="shop">
-        <MenubarTrigger className="cursor-pointer gap-x-1 flex max-lg:w-screen">
+        <MenubarTrigger
+          className={`cursor-pointer gap-x-1 flex max-lg:w-screen ${
+            pathname.startsWith("/shop") && "bg-slate-200"
+          }`}
+        >
           Shop <ArrowDown2 size={12} />
         </MenubarTrigger>
         <MenubarContent className="max-lg:w-screen">
@@ -82,17 +91,29 @@ const MenuBarComponent = () => {
         </MenubarContent>
       </MenubarMenu>
       <MenubarMenu key="our-story">
-        <MenubarTrigger className="max-lg:w-screen">
+        <MenubarTrigger
+          className={`max-lg:w-screen ${
+            pathname.startsWith("/our-story") && "bg-slate-200"
+          }`}
+        >
           <Link href={"/our-story"}>Our Story</Link>
         </MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu key="blog">
-        <MenubarTrigger className="max-lg:w-screen">
+        <MenubarTrigger
+          className={`max-lg:w-screen ${
+            pathname.startsWith("/blog") && "bg-slate-200"
+          }`}
+        >
           <Link href={"/blog"}>Blog</Link>
         </MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu key="contact">
-        <MenubarTrigger className="max-lg:w-screen">
+        <MenubarTrigger
+          className={`max-lg:w-screen ${
+            pathname.startsWith("/contact-us") && "bg-slate-200"
+          }`}
+        >
           <Link href={"/contact-us"}>Contact Us</Link>
         </MenubarTrigger>
       </MenubarMenu>

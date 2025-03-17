@@ -1,5 +1,6 @@
 import { images } from "@/assets/image";
 import AvatarComponent from "@/components/header/AvatarComponent";
+import CartComponent from "@/components/header/CartComponent";
 import MenuBarComponent from "@/components/header/MenuBarComponent";
 import MenuMobileComponent from "@/components/header/MenuMobileComponent";
 import { Bag2, Heart } from "iconsax-react";
@@ -24,10 +25,7 @@ const HeaderComponent = () => {
       <div className="flex flex-row gap-x-4 items-center max-lg:hidden">
         <Search size="24" className="cursor-pointer" />
         <Heart size="24" className="cursor-pointer" />
-        <div className="relative">
-          <div className="rounded-full bg-red-400 absolute -top-1 -right-1 p-1 flex items-center justify-center font-semibold" />
-          <Bag2 size="24" className="cursor-pointer" />
-        </div>
+        <CartComponent />
         <div>
           <AvatarComponent />
         </div>

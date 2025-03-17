@@ -1,39 +1,18 @@
-"use client";
-
 import handleAPI from "@/apis/handleApi";
 import ProductViewComponent from "@/components/content/ProductViewComponent";
 import { ProductModel } from "@/models/ProductModel";
-import React, { useEffect, useState } from "react";
-import { number } from "zod";
 
-const ProductListComponent = () => {
-  const [products, setProducts] = useState<ProductModel[]>([]);
+const ProductListComponent = async () => {
+  const api = `/customer/best-seller`;
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const res = await handleAPI(api);
 
-  useEffect(() => {
-    getBestSellerProducts();
-  }, []);
-
-  const getBestSellerProducts = async () => {
-    setIsLoading(true);
-    try {
-      const api = `/customer/best-seller`;
-      const res = await handleAPI(api);
-      res.data && setProducts(res.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) return;
+  const products = res.data;
 
   return (
     <div className="grid grid-cols-4 max-lg:grid-cols-2 max-md:grid-cols-1 gap-6 px-12">
       {products &&
-        products.map((item: ProductModel, index: number) => (
+        products.map((item: ProductModel) => (
           <ProductViewComponent
             id={item._id}
             src={item.images[0]}

@@ -51,20 +51,20 @@ const ProductViewComponent = (props: Props) => {
         >
           <div className="absolute top-0 right-0 pr-6 pt-6 flex flex-col gap-y-1">
             <div
-              className="p-2 bg-white rounded-full cursor-pointer"
+              className="p-2 bg-white rounded-full cursor-pointer hover:bg-slate-300"
               onClick={() => {}}
             >
               <Star1 size="16" color="#555555" />
             </div>
             <div
-              className="p-2 bg-white rounded-full cursor-pointer"
+              className="p-2 bg-white rounded-full cursor-pointer hover:bg-slate-300"
               onClick={() => {}}
             >
               <ArrowSwapHorizontal size="16" color="#555555" />
             </div>
             <Link
               href={`/product/${replaceName(title)}/${id}`}
-              className="p-2 bg-white rounded-full cursor-pointer"
+              className="p-2 bg-white rounded-full cursor-pointer hover:bg-slate-300"
             >
               <Eye size="16" color="#555555" />
             </Link>
@@ -72,7 +72,7 @@ const ProductViewComponent = (props: Props) => {
 
           <div
             onClick={() => {}}
-            className="cursor-pointer absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 py-2 bg-white text-center rounded-lg mb-4 font-bold text-sm"
+            className="cursor-pointer absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 py-2 bg-white text-center rounded-lg mb-4 font-bold text-sm hover:bg-black hover:text-white"
           >
             <Link href={`/`}>Add to cart</Link>
           </div>

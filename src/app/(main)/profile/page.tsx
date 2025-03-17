@@ -5,7 +5,7 @@ export const metadata: Metadata = {
 };
 
 const ProfilePage = () => {
-  return <div></div>;
+  return <div>đasa</div>;
 };
 
 export default ProfilePage;
