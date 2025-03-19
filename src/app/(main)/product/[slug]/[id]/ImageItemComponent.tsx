@@ -9,8 +9,8 @@ const ImageItemComponent = (props: Props) => {
 
   return (
     <div className="flex w-full justify-between mt-4">
-      {images.map((item: string) => (
-        <img src={item} alt="" width={90} height={120} />
+      {images.map((item: string, index: number) => (
+        <img src={item} alt="" width={90} height={120} key={index} />
       ))}
     </div>
   );

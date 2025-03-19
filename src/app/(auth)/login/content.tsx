@@ -11,15 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuthStore } from "@/store/useAuthStore";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useAuthStore } from "@/store/useAuthStore";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
 
 const LoginContent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

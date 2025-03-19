@@ -26,6 +26,7 @@ const AvatarComponent = () => {
 
   const handleLogout = () => {
     removeAuth();
+    localStorage.clear();
     toast.success("Logged out successfully");
     router.push("/login");
   };
@@ -43,16 +44,26 @@ const AvatarComponent = () => {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem className="flex gap-x-1 cursor-pointer items-center">
-                <Link href={"/profile"} className="flex gap-x-1 items-center">
+              <DropdownMenuItem
+                key={"profile"}
+                className="flex gap-x-1 cursor-pointer items-center w-full"
+              >
+                <Link
+                  href={"/profile"}
+                  className="flex gap-x-1 items-center w-full"
+                >
                   <User size={16} />
                   Profile
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+
+              <DropdownMenuItem
+                key={"logout"}
+                className="cursor-pointer w-full"
+              >
                 <div
                   onClick={handleLogout}
-                  className="flex gap-x-1 items-center"
+                  className="flex gap-x-1 items-center w-full"
                 >
                   <Logout size={16} />
                   Log out

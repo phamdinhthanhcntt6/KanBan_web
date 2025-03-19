@@ -3,7 +3,7 @@ import AvatarComponent from "@/components/header/AvatarComponent";
 import CartComponent from "@/components/header/CartComponent";
 import MenuBarComponent from "@/components/header/MenuBarComponent";
 import MenuMobileComponent from "@/components/header/MenuMobileComponent";
-import { Bag2, Heart } from "iconsax-react";
+import { Heart } from "iconsax-react";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

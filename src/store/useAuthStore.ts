@@ -55,6 +55,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   removeAuth: () => {
     set({ auth: initialState });
     syncLocal(null);
+    localStorage.clear();
   },
   refreshToken: (token) => {
     set((state) => ({

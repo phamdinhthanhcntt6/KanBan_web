@@ -2,55 +2,62 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface ProductState {
-  id: string;
+  subProductId: string;
+  createdBy: string;
   name: string;
   price: number;
   image: string[];
   color: string;
   size: string;
-  quantity: number;
+  count: number;
+  title: string;
 }
 
 interface CartStore {
-  cart: (ProductState & { quantity: number })[];
+  cart: ProductState[];
   addCart: (prod: ProductState) => void;
-  removeCart: (prod: ProductState) => void;
+  removeCart: (id: string) => void;
   clearCart: () => void;
   updateQuantity: (id: string, quantity: number) => void;
+  syncCart: (prod: ProductState[]) => void;
 }
 
 export const useCartStore = create(
   persist<CartStore>(
-    (set) => ({
+    (set, get) => ({
       cart: [],
-      addCart: (prod) =>
-        set((state) => {
-          const existingItem = state.cart.find(
-            (item) =>
-              item.id === prod.id &&
-              item.color === prod.color &&
-              item.size === prod.size
-          );
+      addCart: (prod: ProductState) => {
+        const { cart } = get();
+        const index = cart.findIndex(
+          (e) => e.subProductId === prod.subProductId
+        );
 
-          if (existingItem) {
-            return {
-              cart: state.cart.map((item) =>
-                item.id === prod.id &&
-                item.color === prod.color &&
-                item.size === prod.size
-                  ? { ...item, quantity: item.quantity + prod.quantity }
-                  : item
-              ),
-            };
-          }
-
-          return {
-            cart: [...state.cart, { ...prod }],
-          };
-        }),
-      removeCart: (prod) => set((state) => ({})),
-      clearCart: () => set({ cart: [] }),
-      updateQuantity: (id, quantity) => set((state) => ({})),
+        if (index !== -1) {
+          const upData = [...cart];
+          upData[index].count += prod.count;
+          set({ cart: upData });
+        } else {
+          set({ cart: [...cart, prod] });
+        }
+      },
+      removeCart: (id: string) => {
+        set((state) => ({
+          cart: state.cart.filter((item) => item.subProductId !== id),
+        }));
+      },
+      clearCart: () => {
+        set({ cart: [] });
+      },
+      updateQuantity: (id: string, quantity: number) => {
+        set((state) => ({
+          cart: state.cart.map((item) =>
+            item.subProductId === id ? { ...item, count: quantity } : item
+          ),
+        }));
+      },
+      syncCart: (items: ProductState[]) => {
+        set({ cart: items });
+      },
     }),
     {
       name: "cart-storage",

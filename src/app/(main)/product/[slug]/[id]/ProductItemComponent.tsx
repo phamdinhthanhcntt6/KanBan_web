@@ -1,5 +1,6 @@
 "use client";
 
+import handleAPI from "@/apis/handleApi";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -33,7 +34,7 @@ const ProductItemComponent = (props: Props) => {
 
   const [quantitySelected, setQuantitySelected] = useState<number>(0);
 
-  const [number, setNumber] = useState<number>(0);
+  const [count, setCount] = useState<number>(1);
 
   const [priceSelected, setPriceSelected] = useState<number>(0);
 
@@ -41,7 +42,7 @@ const ProductItemComponent = (props: Props) => {
 
   const { auth } = useAuthStore();
 
-  const { addCart } = useCartStore();
+  const { cart, addCart } = useCartStore();
 
   useEffect(() => {
     const subProductSeleted = subProduct.find(
@@ -73,35 +74,46 @@ const ProductItemComponent = (props: Props) => {
     );
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!auth.token) {
       setIsVisible(true);
       return;
     }
 
-    if (!colorSelected || !sizeSelected || number <= 0) {
-      toast.error("Vui lòng chọn màu sắc, kích thước và số lượng");
+    if (!colorSelected || !sizeSelected) {
+      toast.error("Choose color, size");
       return;
     }
 
     const subProductSelected = subProduct.find(
-      (item) =>
-        item.color === colorSelected &&
-        item.size === sizeSelected &&
-        number <= item.quantity
+      (item) => item.color === colorSelected && item.size === sizeSelected
     );
 
     if (subProductSelected) {
-      addCart({
-        id: subProductSelected._id,
-        name: product.title,
+      const values = {
+        subProductId: subProductSelected._id,
+        title: product.title,
         price: priceSelected,
         image: subProductSelected.images,
         size: sizeSelected,
         color: colorSelected,
-        quantity: number,
-      });
-      toast.success("Đã thêm vào giỏ hàng thành công!");
+        quantity: quantitySelected,
+        createdBy: auth._id,
+        count: count,
+      };
+
+      const index = cart.findIndex(
+        (e: any) => e.productId === values.subProductId
+      );
+
+      if (index !== -1) {
+      } else {
+        const api = `/cart/create`;
+        const res = await handleAPI(api, values, "post");
+        addCart(res.data);
+      }
+
+      toast.success("Add to cart successfully!");
     }
   };
 
@@ -161,20 +173,20 @@ const ProductItemComponent = (props: Props) => {
           <Button
             variant={"outline"}
             className="py-6 border-none shadow-none text-lg font-bold p-0 hover:bg-white"
-            onClick={() => setNumber(number - 1)}
-            disabled={number <= 0 || !colorSelected || !sizeSelected}
+            onClick={() => setCount(count - 1)}
+            disabled={count <= 0 || !colorSelected || !sizeSelected}
           >
             -
           </Button>
           <div className="font-semibold text-lg flex-1 text-center">
-            {number}
+            {count}
           </div>
           <Button
             variant={"outline"}
             className="py-6 border-none shadow-none text-lg font-bold p-0 hover:bg-white"
-            onClick={() => setNumber(number + 1)}
+            onClick={() => setCount(count + 1)}
             disabled={
-              number >= quantitySelected || !colorSelected || !sizeSelected
+              count >= quantitySelected || !colorSelected || !sizeSelected
             }
           >
             +
