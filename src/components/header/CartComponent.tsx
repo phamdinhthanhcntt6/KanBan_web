@@ -13,6 +13,7 @@ import {
 import { CartModel } from "@/models/CartModel";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useCartStore } from "@/store/useCartStore";
+import useStepStore from "@/store/useStepStore";
 import { truncated } from "@/utils/truncatedText";
 import { Bag2 } from "iconsax-react";
 import Link from "next/link";
@@ -26,6 +27,8 @@ const CartComponent = () => {
   const [total, setTotal] = useState<number>(0);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { defaultStep } = useStepStore();
 
   useEffect(() => {
     getCartByUid(auth._id);
@@ -101,7 +104,13 @@ const CartComponent = () => {
             </div>
           </>
         )}
-        <Button className="w-full" variant="outline">
+        <Button
+          variant={"outline"}
+          className="w-full"
+          onClick={() => {
+            defaultStep();
+          }}
+        >
           <Link href={"/cart"} className="w-full">
             View cart
           </Link>

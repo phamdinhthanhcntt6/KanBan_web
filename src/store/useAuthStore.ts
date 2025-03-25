@@ -5,7 +5,8 @@ import { localDataNames } from "../constant/appInfor";
 interface AuthState {
   token: string;
   _id: string;
-  name: string;
+  firstname: string;
+  lastname: string;
   rule: number;
 }
 
@@ -19,8 +20,9 @@ interface AuthStore {
 const initialState: AuthState = {
   token: "",
   _id: "",
-  name: "",
+  firstname: "",
   rule: 0,
+  lastname: "",
 };
 
 const loadInitialState = (): AuthState => {

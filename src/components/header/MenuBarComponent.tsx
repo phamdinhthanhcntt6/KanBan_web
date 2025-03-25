@@ -52,7 +52,7 @@ const MenuBarComponent = () => {
                   {item.children &&
                     item.children.map((child: CategoryModel, index: number) => (
                       <Link
-                        key={child._id}
+                        key={`${index}-${child._id}`}
                         href={`/category/${child._id}`}
                         className="font-normal flex flex-row text-[#131118] hover:font-semibold lg:p-1 p-[1px] w-full hover:bg-slate-200 hover:rounded-md"
                       >

@@ -13,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const CategoryCarouselComponent = async () => {
-  const api = `customer/get-categories`;
+  const api = `/customer/get-categories`;
   const res = await handleAPI(api);
   const category =
     res.data && res.data.filter((item: any) => item.parentId === "");

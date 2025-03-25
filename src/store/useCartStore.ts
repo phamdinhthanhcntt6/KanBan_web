@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface ProductState {
+  _id: string;
   subProductId: string;
   createdBy: string;
   name: string;
@@ -42,7 +43,7 @@ export const useCartStore = create(
       },
       removeCart: (id: string) => {
         set((state) => ({
-          cart: state.cart.filter((item) => item.subProductId !== id),
+          cart: state.cart.filter((item) => item._id !== id),
         }));
       },
       clearCart: () => {

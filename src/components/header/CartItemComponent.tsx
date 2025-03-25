@@ -64,7 +64,7 @@ const CartItemComponent = (props: Props) => {
       <Button
         variant={"ghost"}
         className="flex text-xs p-1 hover:bg-white active:bg-red-300 h-max"
-        onClick={() => removeProductInCart(subProductId)}
+        onClick={() => removeProductInCart(id)}
       >
         <Bag
           size={16}

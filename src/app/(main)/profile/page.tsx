@@ -1,6 +1,6 @@
-import MyOrdersTab from "@/app/(main)/profile/component/MyOrdersTab";
-import PersonalInformationTab from "@/app/(main)/profile/component/PersonalInformationTab";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import AvatarComponent from "./components/AvatarComponent";
+import MyOrdersTab from "./components/MyOrdersTab";
+import PersonalInformationTab from "./components/PersonalInformationTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
@@ -33,15 +33,7 @@ const ProfilePage = () => {
         <div className="text-2xl font-semibold">My Profile</div>
         <Tabs defaultValue="personal_information" className="w-full h-max flex">
           <TabsList className="flex flex-col w-1/5 grid-cols-2 h-full p-0 rounded-none">
-            <div className="flex justify-start w-full py-3 px-3 gap-x-2 items-center text-black">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="avatar" />
-              </Avatar>
-              <div className="flex flex-col justify-between">
-                <div>Hello</div>
-                <div className="font-bold ">Name</div>
-              </div>
-            </div>
+            <AvatarComponent />
             <TabTrigger
               value="personal_information"
               children={<>Personal Information</>}
