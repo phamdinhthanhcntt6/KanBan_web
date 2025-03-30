@@ -30,12 +30,16 @@ const SubProductDetailPage = async ({ params }: ProductDetailProps) => {
   const getProductDetail = async (id: string) => {
     const api = `/customer/product/detail?id=${id}`;
     const res = await handleAPI(api);
-    return res.data;
+    return res.data ? res.data : [];
   };
 
   const productData = await getProductDetail(params.id);
+
   const product: ProductModel = productData.items;
+
   const subProducts: SubProductModel[] = productData.subProduct;
+
+  const relatedProducts: ProductModel[] = productData.relatedProducts;
 
   let quantity = 0;
   subProducts.map((item: SubProductModel) => (quantity += item.quantity));
@@ -66,8 +70,8 @@ const SubProductDetailPage = async ({ params }: ProductDetailProps) => {
         </Breadcrumb>
       </div>
 
-      <div className="flex flex-row md:grid-cols-2 gap-8">
-        <div className="flex flex-col w-5/12">
+      <div className="flex flex-row gap-8 max-lg:flex-col">
+        <div className="flex flex-col w-5/12 max-lg:w-full">
           <div className="rounded-lg w-full flex flex-col">
             {product.images && (
               <Image
@@ -82,7 +86,7 @@ const SubProductDetailPage = async ({ params }: ProductDetailProps) => {
           </div>
         </div>
 
-        <div className="w-7/12 space-y-4">
+        <div className="w-7/12 space-y-4 max-lg:w-full">
           <div className="flex justify-between">
             <h1 className="text-3xl font-bold">{product.title}</h1>
             {quantity > 0 ? (
@@ -108,6 +112,8 @@ const SubProductDetailPage = async ({ params }: ProductDetailProps) => {
           <ProductItemComponent product={product} subProduct={subProducts} />
         </div>
       </div>
+
+      <div className="text-2xl font-semibold">Ralated Products</div>
     </div>
   );
 };

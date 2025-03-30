@@ -25,7 +25,7 @@ import { z } from "zod";
 const Step2 = () => {
   const { next } = useStepStore();
 
-  const [method, setMethod] = useState<string>("");
+  const [method, setMethod] = useState<string>("cod");
 
   const RadioButton = ({ choose }: { choose: string }) => {
     return (
@@ -37,44 +37,40 @@ const Step2 = () => {
     );
   };
 
-  const cardSchema = z.object({
-    number: z
-      .string()
-      .min(1, "Card number is required")
-      .regex(/^[0-9]+$/, "Must contain only digits")
-      .max(16, "Must not exceed 16 digits"),
-
-    name: z
-      .string()
-      .min(1, "Card name is required")
-      .regex(/^[a-zA-Z\s]+$/, "Must contain only letters and spaces"),
-
-    date: z.string().nonempty(),
-
-    cvv: z
-      .string()
-      .min(1, "CVV is required")
-      .regex(/^[0-9]+$/, "Must contain only digits")
-      .max(3, "Must be exactly 3 digits"),
-  });
-
-  const form = useForm<z.infer<typeof cardSchema>>({
-    resolver: zodResolver(cardSchema),
-    defaultValues: {
-      number: "",
-      name: "",
-      date: "",
-      cvv: "",
-    },
-  });
-
-  const onSubmit = async (values: z.infer<typeof cardSchema>) => {
-    console.log(values);
-  };
-
   const FormCardMethod = () => {
+    const cardSchema = z.object({
+      number: z.string().min(1, "Card number is required"),
+
+      name: z
+        .string()
+        .min(1, "Card name is required")
+        .regex(/^[a-zA-Z\s]+$/, "Must contain only letters and spaces"),
+
+      date: z.string().nonempty(),
+
+      cvv: z
+        .string()
+        .min(1, "CVV is required")
+        .regex(/^[0-9]+$/, "Must contain only digits")
+        .max(3, "Must be exactly 3 digits"),
+    });
+
+    const form = useForm<z.infer<typeof cardSchema>>({
+      resolver: zodResolver(cardSchema),
+      defaultValues: {
+        number: "",
+        name: "",
+        date: "",
+        cvv: "",
+      },
+    });
+
+    const onSubmit = async (values: z.infer<typeof cardSchema>) => {
+      console.log(values);
+    };
+
     return (
-      <div className="px-2">
+      <div className="px-2 pt-1">
         <Form {...form}>
           <form
             className="flex flex-col gap-y-4"
@@ -85,9 +81,23 @@ const Step2 = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Card number</FormLabel>
+                  <FormLabel>Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="Card number" {...field} />
+                    <Input
+                      placeholder="Card number"
+                      {...field}
+                      maxLength={19}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\s/g, "");
+
+                        const formattedValue = value
+                          .replace(/(\d{4})/g, "$1 ")
+                          .trim();
+
+                        field.onChange(formattedValue);
+                      }}
+                      value={field.value}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,7 +125,7 @@ const Step2 = () => {
                     <FormLabel>Date</FormLabel>
                     <FormControl>
                       <Input
-                        type="date"
+                        type="month"
                         placeholder="Date"
                         {...field}
                         className="w-full"
@@ -148,7 +158,7 @@ const Step2 = () => {
     );
   };
 
-  const data = [
+  const paymentMethod = [
     {
       value: "card",
       trigger: "Debit/Credit Card",
@@ -165,8 +175,8 @@ const Step2 = () => {
     <div className="p-12 gap-y-12 flex flex-col">
       <ProgressCheckOut step={2} />
       <div className="font-semibold">Select a payment method</div>
-      <Accordion type="single" collapsible>
-        {data.map((item) => (
+      <Accordion type="single" collapsible defaultValue="cod">
+        {paymentMethod.map((item) => (
           <AccordionItem value={item.value}>
             <AccordionTrigger
               className="justify-normal flex gap-x-4 items-center"

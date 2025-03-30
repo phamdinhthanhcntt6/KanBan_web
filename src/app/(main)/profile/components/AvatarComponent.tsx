@@ -14,9 +14,9 @@ const AvatarComponent = () => {
       </Avatar>
       <div className="flex flex-col justify-between">
         <div>Hello</div>
-        <div className="font-bold ">
+        {/* <div className="font-bold ">
           {auth.firstname} {auth.lastname}
-        </div>
+        </div> */}
       </div>
     </div>
   );

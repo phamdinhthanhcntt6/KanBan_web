@@ -1,14 +1,12 @@
 "use client";
 
-import ProgressCheckOut from "@/app/(main)/cart/components/ProgressCheckOut";
 import Step1 from "@/app/(main)/cart/components/Step1";
 import Step2 from "@/app/(main)/cart/components/Step2";
 import Step3 from "@/app/(main)/cart/components/Step3";
 import useStepStore from "@/store/useStepStore";
-import { Home2 } from "iconsax-react";
 
 const ProgressComponent = () => {
-  const { step, next, previous, isHydrated } = useStepStore();
+  const { step } = useStepStore();
 
   const renderStep = (step: number) => {
     switch (step) {

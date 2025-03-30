@@ -32,7 +32,7 @@ const CartComponent = () => {
 
   useEffect(() => {
     getCartByUid(auth._id);
-  }, [auth]);
+  }, []);
 
   useEffect(() => {
     const totalAmount = cart.reduce(
@@ -104,17 +104,17 @@ const CartComponent = () => {
             </div>
           </>
         )}
-        <Button
-          variant={"outline"}
-          className="w-full"
-          onClick={() => {
-            defaultStep();
-          }}
-        >
-          <Link href={"/cart"} className="w-full">
+        <Link href={"/cart"} className="w-full">
+          <Button
+            variant={"outline"}
+            className="w-full"
+            onClick={() => {
+              defaultStep();
+            }}
+          >
             View cart
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

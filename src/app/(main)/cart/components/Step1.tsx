@@ -29,7 +29,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const Step1 = () => {
-  const [isLoading, setisLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [addresses, setAddresses] = useState<any[]>([]);
 
@@ -97,7 +97,7 @@ const Step1 = () => {
       createdBy: auth?._id,
       isDefault: checkDefaultAddress(addresses) ? false : true,
     };
-    setisLoading(true);
+    setIsLoading(true);
 
     try {
       if (addressSelected) {
@@ -111,7 +111,7 @@ const Step1 = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setisLoading(false);
+      setIsLoading(false);
     }
   };
 

@@ -168,8 +168,8 @@ const ProductItemComponent = (props: Props) => {
       <div className="text-slate-600">
         remaining {quantitySelected ?? 0} product(s)
       </div>
-      <div className="flex gap-x-4 w-full">
-        <div className="flex flex-row items-center border-slate-700 border-2 rounded-xl px-4 gap-x-6 w-1/4">
+      <div className="flex gap-x-4 w-full max-md:flex-col max-md:gap-y-4">
+        <div className="flex flex-row items-center border-slate-700 border-2 rounded-xl px-4 gap-x-6 w-1/4 max-md:w-max">
           <Button
             variant={"outline"}
             className="py-6 border-none shadow-none text-lg font-bold p-0 hover:bg-white"
@@ -198,7 +198,7 @@ const ProductItemComponent = (props: Props) => {
         >
           Add to cart
         </Button>
-        <Button className="bg-white py-6 hover:bg-white border-2 border-slate-700 shadow-none">
+        <Button className="bg-white py-6 hover:bg-white border-2 border-slate-700 shadow-none max-md:w-max">
           <Heart color="black" variant="Outline" />
         </Button>
       </div>

@@ -8,29 +8,35 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { CategoryModel } from "@/models/CategoryModel";
+import { useCateStore } from "@/store/useCateStore";
 import { getTreeData } from "@/utils/getTreeData";
 import { ArrowDown2 } from "iconsax-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const MenuBarComponent = () => {
-  const [category, setCategory] = useState<CategoryModel[]>([]);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
   const pathname = usePathname();
 
+  const { cate, syncCate } = useCateStore();
+
   useEffect(() => {
-    getData();
+    cate.length == 0 && getData();
   }, []);
 
   const getData = async () => {
+    if (isDataFetched) return;
+
     try {
       setIsLoading(true);
       const api = `/customer/get-categories`;
       const res = await handleAPI(api);
-      setCategory(getTreeData(res.data));
+      syncCate(getTreeData(res.data));
+      setIsDataFetched(true);
     } catch (error) {
       console.log(error);
     } finally {
@@ -42,8 +48,8 @@ const MenuBarComponent = () => {
     return (
       <div className="lg:w-max max-lg:overflow-y-scroll max-lg:h-[700px] max-lg:w-screen">
         <div className="grid grid-cols-4 max-lg:grid-cols-2 max-lg:w-full">
-          {category &&
-            category.map((item: CategoryModel) => (
+          {cate &&
+            cate.map((item: any) => (
               <div key={item._id} className="w-full mx-2 h-max">
                 <div className="font-bold text-[#131118] px-1 lg:p-1 underline">
                   {item.title}

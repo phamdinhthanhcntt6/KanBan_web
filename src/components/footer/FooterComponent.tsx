@@ -170,12 +170,12 @@ const FooterComponent = () => {
       <div className="px-12 w-full flex mx-auto max-w-7xl">
         <div className="w-full h-[1px] bg-white" />
       </div>
-      <div className="w-full max-w-7xl flex mx-auto py-2 justify-between px-12">
+      <div className="w-full max-w-7xl flex mx-auto py-2 justify-between px-12 max-md:flex-col max-md:gap-y-2">
         <div className="flex gap-x-2">
-          <div className="px-1 py-1 bg-white rounded-md cursor-pointer">
+          <div className="px-1 py-1 bg-white rounded-md cursor-pointer h-max">
             <Paypal size={24} color="black" />
           </div>
-          <div className="px-1 py-1 bg-white rounded-md cursor-pointer">
+          <div className="px-1 py-1 bg-white rounded-md cursor-pointer h-max  ">
             <Google size={24} color="black" />
           </div>
         </div>

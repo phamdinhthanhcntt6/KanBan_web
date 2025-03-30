@@ -16,7 +16,7 @@ const ProgressCheckOut = ({ step }: { step: number }) => {
         />
       </div>
       <div className="absolute flex justify-between -top-4 w-full">
-        <div className="flex flex-col w-max">
+        <div className="flex flex-col w-max" key={"step1"}>
           <div className="p-2 bg-black w-max rounded-lg">
             <Home2 size={16} color="white" />
           </div>
@@ -24,7 +24,7 @@ const ProgressCheckOut = ({ step }: { step: number }) => {
             Address
           </div>
         </div>
-        <div className="flex flex-col w-max">
+        <div className="flex flex-col w-max" key={"step2"}>
           <div
             className={`p-2 ${
               step >= 2 ? "bg-black" : "bg-slate-100"
@@ -34,7 +34,7 @@ const ProgressCheckOut = ({ step }: { step: number }) => {
           </div>
           <div className="text-sm font-semibold mt-2">Payment Method</div>
         </div>
-        <div className="flex flex-col w-max translate-x-3">
+        <div className="flex flex-col w-max translate-x-3" key={"step3"}>
           <div
             className={`p-2 ${
               step == 3 ? "bg-black" : "bg-slate-100"
