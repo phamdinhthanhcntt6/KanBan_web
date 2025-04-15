@@ -176,8 +176,8 @@ const Step2 = () => {
       <ProgressCheckOut step={2} />
       <div className="font-semibold">Select a payment method</div>
       <Accordion type="single" collapsible defaultValue="cod">
-        {paymentMethod.map((item) => (
-          <AccordionItem value={item.value}>
+        {paymentMethod.map((item, index) => (
+          <AccordionItem value={item.value} key={index}>
             <AccordionTrigger
               className="justify-normal flex gap-x-4 items-center"
               onClick={() => {

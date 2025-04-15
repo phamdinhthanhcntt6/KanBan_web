@@ -1,16 +1,12 @@
 export interface OrderModel {
-  index: number;
-  name: string;
-  slug: string;
-  product: string;
-  categories: string[];
-  price: number;
+  products: object[];
+  total: number;
   contact: string;
-  isTaking: number;
-  photoUrl: string;
-  createAt: string;
-  updateAt: string;
-  _id: string;
+  createAt?: string;
+  updateAt?: string;
   email: string;
-  active: string;
+  payment: string;
+  address: string;
+  status: string;
+  name: string;
 }

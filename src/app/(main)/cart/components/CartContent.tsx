@@ -3,6 +3,17 @@
 import handleAPI from "@/apis/handleApi";
 import ProgressComponent from "@/app/(main)/cart/components/ProgressComponent";
 import LoadingComponent from "@/components/main/LoadingComponent";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,6 +31,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { CartModel } from "@/models/CartModel";
+import { OrderModel } from "@/models/OrderModel";
+import useAddressStore from "@/store/useAddressStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useCartStore } from "@/store/useCartStore";
 import useStepStore from "@/store/useStepStore";
 import { truncated } from "@/utils/truncatedText";
@@ -29,10 +43,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const CartContent = () => {
-  const { cart, updateQuantity, removeCart } = useCartStore();
-
-  const { step, next, previous, isHydrated } = useStepStore();
-
   const [total, setTotal] = useState<number>(0);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -46,6 +56,22 @@ const CartContent = () => {
   const [message, setMessage] = useState<string>("");
 
   const [grandTotal, setGrandTotal] = useState<number>(0);
+
+  const { cart, updateQuantity, removeCart } = useCartStore();
+
+  const { step, next, previous, isHydrated } = useStepStore();
+
+  const { auth } = useAuthStore();
+
+  const { defaultAddress } = useAddressStore();
+
+  const { clearCart } = useCartStore();
+
+  const { defaultStep } = useStepStore();
+
+  const paymentMethod = localStorage.getItem("payment")
+    ? localStorage.getItem("payment")
+    : "cod";
 
   useEffect(() => {
     const totalAmount = cart.reduce(
@@ -115,7 +141,26 @@ const CartContent = () => {
   };
 
   const createOrder = async () => {
-    console.log(1);
+    const body: OrderModel = {
+      products: cart,
+      total: grandTotal,
+      contact: defaultAddress.phone,
+      email: auth.email,
+      payment: paymentMethod ?? "cod",
+      address: defaultAddress.address,
+      status: "pending",
+      name: `${auth.firstname} ${auth.lastname}`,
+    };
+
+    try {
+      const api = `/order/create`;
+      const res = await handleAPI(api, body, "post");
+      res.data && defaultStep();
+      res.data && clearCart();
+      await handleAPI(`/cart/clear?uid=${auth._id}`, undefined, "delete");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -254,7 +299,7 @@ const CartContent = () => {
           </div>
         )}
         <div className="w-1/3">
-          <Card>
+          <Card className="w-full">
             <CardHeader>
               <CardTitle className="flex flex-row w-full justify-between">
                 <div>Subtotal</div>
@@ -275,7 +320,7 @@ const CartContent = () => {
                   }}
                 />
                 <Button
-                  disabled={isLoading || code === ""}
+                  disabled={isLoading || code === "" || cart.length === 0}
                   onClick={() => checkCodePromotion(code)}
                   type="submit"
                   className="rounded-none rounded-tr-lg rounded-br-lg"
@@ -301,21 +346,40 @@ const CartContent = () => {
                 <div>${grandTotal}</div>
               </div>
             </CardContent>
-            <CardFooter>
-              <Button
-                className={`${!step0 && "hidden"} w-full`}
-                onClick={() => next()}
-              >
-                Proceed to Checkout
-              </Button>
-              <Button
-                className={`${step !== 3 && "hidden"} w-full`}
-                onClick={() => {
-                  createOrder();
-                }}
-              >
-                Play Order
-              </Button>
+            <CardFooter className="flex justify-center w-full">
+              {step0 && (
+                <Button
+                  className={`w-full`}
+                  onClick={() => cart.length > 0 && next()}
+                >
+                  Proceed to Checkout
+                </Button>
+              )}
+              {step == 3 && (
+                <AlertDialog>
+                  <AlertDialogTrigger className="w-full">
+                    <Button className={`w-full`} onClick={() => {}}>
+                      Play Order
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={createOrder}>
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
             </CardFooter>
           </Card>
         </div>

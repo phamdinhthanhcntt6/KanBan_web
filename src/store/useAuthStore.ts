@@ -8,6 +8,7 @@ interface AuthState {
   firstname: string;
   lastname: string;
   rule: number;
+  email: string;
 }
 
 interface AuthStore {
@@ -23,6 +24,7 @@ const initialState: AuthState = {
   firstname: "",
   rule: 0,
   lastname: "",
+  email: "",
 };
 
 const loadInitialState = (): AuthState => {

@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AddressModel } from "@/models/AddressModel";
+import useAddressStore from "@/store/useAddressStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import useStepStore from "@/store/useStepStore";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,12 +40,16 @@ const Step1 = () => {
 
   const [addressSelected, setAddressSelected] = useState<AddressModel>();
 
+  const { setAddressDefault, defaultAddress } = useAddressStore();
+
   useEffect(() => {
     getAddresses(auth?._id);
   }, []);
 
   useEffect(() => {
     checkDefaultAddress(addresses);
+    const defaultAdd = addresses.filter((item) => item.isDefault);
+    setAddressDefault(defaultAdd[0]);
   }, [addresses]);
 
   const formSchema = z.object({
@@ -119,7 +124,11 @@ const Step1 = () => {
     try {
       const api = `/address?uid=${uid}`;
       const res = await handleAPI(api);
-      setAddresses(res.data);
+      const data = res.data;
+      setAddresses(data);
+
+      const address = data.find((item: AddressModel) => item.isDefault);
+      setAddressDefault(address);
     } catch (error) {
       console.log(error);
     }
@@ -178,9 +187,9 @@ const Step1 = () => {
                     <Checkbox
                       key={`checkbox_${item._id}`}
                       checked={item.isDefault}
-                      onCheckedChange={(val: boolean) =>
-                        setDefaultAddress(item._id, auth._id, val)
-                      }
+                      onCheckedChange={(val: boolean) => {
+                        setDefaultAddress(item._id, auth._id, val);
+                      }}
                     />
                   </div>
                   <div className="font-medium text-xs">{item.address}</div>

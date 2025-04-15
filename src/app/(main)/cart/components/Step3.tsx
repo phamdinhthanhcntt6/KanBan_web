@@ -1,9 +1,14 @@
 import ProgressCheckOut from "@/app/(main)/cart/components/ProgressCheckOut";
+import { Button } from "@/components/ui/button";
+import useAddressStore from "@/store/useAddressStore";
 import { useCartStore } from "@/store/useCartStore";
+import { Edit } from "lucide-react";
 import Image from "next/image";
 
 const Step3 = () => {
   const { cart } = useCartStore();
+
+  const { defaultAddress } = useAddressStore();
 
   const today = new Date();
 
@@ -47,11 +52,26 @@ const Step3 = () => {
           </div>
         ))}
       </div>
-      <div className="font-semibold border-b-[1px] border-gray-200 pb-4">
-        Shipping Address
+      <div className=" border-b-[1px] border-gray-200 pb-4">
+        <div className="font-semibold">Shipping Address</div>
+        <div className="flex mt-2 justify-between items-center">
+          <div>
+            <div className="font-semibold">{defaultAddress.name}</div>
+            <div className="font-normal text-sm text-gray-500">
+              {defaultAddress.address}
+            </div>
+          </div>
+          <Button variant={"secondary"} className="p-3">
+            <Edit size={16} />
+          </Button>
+        </div>
       </div>
-      <div className="font-semibold border-b-[1px] border-gray-200 pb-4">
-        Payment Method
+
+      <div className="border-b-[1px] border-gray-200 pb-4">
+        <div className="font-semibold">Payment Method</div>
+        <div className="font-normal text-gray-500 text-sm">
+          Cost on delivery
+        </div>
       </div>
     </div>
   );
