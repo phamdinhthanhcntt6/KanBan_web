@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/table";
 import { CartModel } from "@/models/CartModel";
 import { OrderModel } from "@/models/OrderModel";
+import { SubProductModel } from "@/models/SubProductModel";
 import useAddressStore from "@/store/useAddressStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useCartStore } from "@/store/useCartStore";
@@ -158,6 +159,22 @@ const CartContent = () => {
       res.data && defaultStep();
       res.data && clearCart();
       await handleAPI(`/cart/clear?uid=${auth._id}`, undefined, "delete");
+
+      const apiUpdate = `/sub-product/update?id=`;
+
+      body.products.map(async (item: any) => {
+        const bodyUpdate = {
+          productId: item.productId,
+          quantity: item.quantity - item.count,
+          color: item.color,
+          images: item.images,
+          size: item.size,
+          price: item.price,
+          discount: item.discount,
+        };
+
+        await handleAPI(apiUpdate + item.subProductId, bodyUpdate, "put");
+      });
     } catch (error) {
       console.log(error);
     }
