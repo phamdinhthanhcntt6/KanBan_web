@@ -9,4 +9,6 @@ export interface OrderModel {
   address: string;
   status: string;
   name: string;
+  createdBy: string;
+  _id: string;
 }

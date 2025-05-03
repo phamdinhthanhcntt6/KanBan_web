@@ -40,7 +40,12 @@ const CategoryCarouselComponent = async () => {
                 href={"/"}
                 className="flex flex-col items-center w-full rounded-sm h-64 relative"
               >
-                <Image alt="" src={images.image1} className="h-64 rounded-sm" />
+                <Image
+                  alt=""
+                  src={images.image1}
+                  className="h-64 rounded-sm"
+                  loading="lazy"
+                />
                 <div className="absolute bottom-4 max-lg:bottom-6 w-full px-6 max-lg:px-16">
                   <div className="bg-white text-xs rounded-lg w-full text-center align-bottom py-2 font-semibold z-10">
                     {item.title}

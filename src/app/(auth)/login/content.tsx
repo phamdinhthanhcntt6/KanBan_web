@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuthStore } from "@/store/useAuthStore";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -108,6 +109,7 @@ const LoginContent = () => {
               </Link>
             </div>
             <Button type="submit" disabled={isLoading}>
+              {isLoading && <Loader2 className="animate-spin" />}
               Login
             </Button>
             <div className="text-sm text-center">

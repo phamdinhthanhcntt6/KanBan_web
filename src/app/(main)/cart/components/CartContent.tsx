@@ -32,7 +32,6 @@ import {
 } from "@/components/ui/table";
 import { CartModel } from "@/models/CartModel";
 import { OrderModel } from "@/models/OrderModel";
-import { SubProductModel } from "@/models/SubProductModel";
 import useAddressStore from "@/store/useAddressStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useCartStore } from "@/store/useCartStore";
@@ -42,6 +41,7 @@ import { Bag, BagCross } from "iconsax-react";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 const CartContent = () => {
   const [total, setTotal] = useState<number>(0);
@@ -142,7 +142,7 @@ const CartContent = () => {
   };
 
   const createOrder = async () => {
-    const body: OrderModel = {
+    const body = {
       products: cart,
       total: grandTotal,
       contact: defaultAddress.phone,
@@ -151,6 +151,7 @@ const CartContent = () => {
       address: defaultAddress.address,
       status: "pending",
       name: `${auth.firstname} ${auth.lastname}`,
+      createdBy: auth._id,
     };
 
     try {
@@ -159,6 +160,7 @@ const CartContent = () => {
       res.data && defaultStep();
       res.data && clearCart();
       await handleAPI(`/cart/clear?uid=${auth._id}`, undefined, "delete");
+      toast.success("Order successfully");
 
       const apiUpdate = `/sub-product/update?id=`;
 

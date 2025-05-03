@@ -4,9 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-import { truncated } from "@/utils/truncatedText";
-import { ArrowSwapHorizontal, Eye, Star1 } from "iconsax-react";
+import handleAPI from "@/apis/handleApi";
 import { replaceName } from "@/utils/replaceName";
+import { truncated } from "@/utils/truncatedText";
+import { Eye, Heart } from "iconsax-react";
+import { toast } from "sonner";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface Props {
   title: string;
@@ -19,7 +22,24 @@ interface Props {
 const ProductViewComponent = (props: Props) => {
   const { title, src, id, description, price } = props;
 
+  const { auth } = useAuthStore();
+
   const [isHover, setIsHover] = useState<boolean>(false);
+
+  const handleAddWishList = async (id: string) => {
+    const body = {
+      productId: id,
+      createdBy: auth._id,
+    };
+
+    try {
+      const api = `/wishlist/create`;
+      await handleAPI(api, body, "post");
+      toast.success("Add to wishlist successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div
@@ -42,25 +62,23 @@ const ProductViewComponent = (props: Props) => {
           width={160}
           height={120}
           loading="lazy"
-          className={`bg-slate-300 w-full h-72 ${
-            isHover && "opacity-75"
-          } rounded-lg`}
+          quality={90}
+          className={`bg-slate-300 w-full h-72 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:brightness-110 ${
+            isHover ? "opacity-75" : ""
+          }`}
         />
+
         <div
           className={`${!isHover && "hidden"} absolute inset-0 flex flex-col`}
         >
           <div className="absolute top-0 right-0 pr-6 pt-6 flex flex-col gap-y-1">
             <div
               className="p-2 bg-white rounded-full cursor-pointer hover:bg-slate-300"
-              onClick={() => {}}
+              onClick={() => {
+                handleAddWishList(id);
+              }}
             >
-              <Star1 size="16" color="#555555" />
-            </div>
-            <div
-              className="p-2 bg-white rounded-full cursor-pointer hover:bg-slate-300"
-              onClick={() => {}}
-            >
-              <ArrowSwapHorizontal size="16" color="#555555" />
+              <Heart size="16" color="red" variant="Bold" />
             </div>
             <Link
               href={`/product/${replaceName(title)}/${id}`}
@@ -68,13 +86,6 @@ const ProductViewComponent = (props: Props) => {
             >
               <Eye size="16" color="#555555" />
             </Link>
-          </div>
-
-          <div
-            onClick={() => {}}
-            className="cursor-pointer absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 py-2 bg-white text-center rounded-lg mb-4 font-bold text-sm hover:bg-black hover:text-white"
-          >
-            <Link href={`/`}>Add to cart</Link>
           </div>
         </div>
       </div>
