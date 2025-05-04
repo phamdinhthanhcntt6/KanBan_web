@@ -54,7 +54,7 @@ const MenuBarComponent = () => {
                 <div className="font-bold text-[#131118] px-1 lg:p-1 underline">
                   {item.title}
                 </div>
-                <div key={item._id}>
+                <div>
                   {item.children &&
                     item.children.map((child: CategoryModel, index: number) => (
                       <Link

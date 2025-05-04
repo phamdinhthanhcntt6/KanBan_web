@@ -14,12 +14,12 @@ const ProductListComponent = async () => {
       {products &&
         products.map((item: ProductModel) => (
           <ProductViewComponent
+            key={item._id}
             id={item._id}
             src={item.images[0]}
             title={item.title}
             description={item.description}
             price={item.price}
-            key={item._id}
           />
         ))}
     </div>

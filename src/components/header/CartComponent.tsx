@@ -86,8 +86,8 @@ const CartComponent = () => {
             {cart.length > 0 &&
               cart.map((item: any) => (
                 <CartItemComponent
-                  subProductId={item.subProductId}
                   key={item._id}
+                  subProductId={item.subProductId}
                   id={item._id}
                   image={item.image[0]}
                   title={truncated(item.title, 24)}

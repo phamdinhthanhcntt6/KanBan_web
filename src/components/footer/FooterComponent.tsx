@@ -70,9 +70,7 @@ const FooterComponent = () => {
 
   const [isVisibleService, setIsVisibleService] = useState<boolean>(false);
 
-  const onSubmit = (val: string) => {
-    console.log(val);
-  };
+  const onSubmit = (val: string) => {};
 
   return (
     <div className="mt-20 w-full bg-[#131118] text-white">

@@ -16,7 +16,7 @@ interface Props {
   src: string;
   id: string;
   description: string;
-  price: number[];
+  price?: number[];
 }
 
 const ProductViewComponent = (props: Props) => {
@@ -26,24 +26,29 @@ const ProductViewComponent = (props: Props) => {
 
   const [isHover, setIsHover] = useState<boolean>(false);
 
-  const handleAddWishList = async (id: string) => {
-    const body = {
-      productId: id,
-      createdBy: auth._id,
-    };
-
+  const toggleWishlist = async (productId: string) => {
     try {
-      const api = `/wishlist/create`;
-      await handleAPI(api, body, "post");
-      toast.success("Add to wishlist successfully");
+      const checkApi = `/wishlist/check?id=${productId}&createdBy=${auth._id}`;
+      const res = await handleAPI(checkApi);
+
+      if (res?.data?.exists) {
+        const deleteApi = `/wishlist/remove?id=${productId}&createdBy=${auth._id}`;
+        await handleAPI(deleteApi, undefined, "delete");
+        toast.info("Removed from wishlist");
+      } else {
+        const body = { productId, createdBy: auth._id };
+        const addApi = `/wishlist/add`;
+        await handleAPI(addApi, body, "post");
+        toast.success("Added to wishlist");
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error("Action failed");
     }
   };
 
   return (
     <div
-      key={`Key${id}`}
       className={`flex flex-col items-center mx-2 motion-translate-y-in-100`}
     >
       <div
@@ -75,7 +80,7 @@ const ProductViewComponent = (props: Props) => {
             <div
               className="p-2 bg-white rounded-full cursor-pointer hover:bg-slate-300"
               onClick={() => {
-                handleAddWishList(id);
+                toggleWishlist(id);
               }}
             >
               <Heart size="16" color="red" variant="Bold" />
@@ -99,7 +104,7 @@ const ProductViewComponent = (props: Props) => {
           {truncated(description, 30)}
         </div>
         <div>
-          {price.length > 0 && (
+          {price && price.length > 0 && (
             <div className="flex">
               &#36;<div>{price[0]}</div>&nbsp;&#8722;&nbsp;
               <div>{price[1]}</div>

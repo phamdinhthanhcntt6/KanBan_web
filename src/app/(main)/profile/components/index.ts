@@ -1,4 +1,4 @@
-import MyWishlistsTab from "./MyWishlists";
+import MyWishlistsTab from "./MyWishlistsTab";
 import MyOrdersTab from "./MyOrdersTab";
 import PersonalInformationTab from "./PersonalInformationTab";
 import ManageAddressTab from "./ManageAddress";

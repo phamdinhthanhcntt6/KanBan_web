@@ -80,10 +80,7 @@ const ContentComponent = () => {
                   key={item.id}
                   className="lg:basis-1/3 max-lg:basis-1/2 max-md:basis-full cursor-pointer"
                 >
-                  <div
-                    className="w-full bg-white rounded-md flex flex-col p-6 boxShadow gap-y-4"
-                    key={item.key}
-                  >
+                  <div className="w-full bg-white rounded-md flex flex-col p-6 boxShadow gap-y-4">
                     <div className="flex gap-x-[1px]">
                       {Array.from({ length: item.star }, (_, index) => (
                         <div key={index}>⭐</div>
