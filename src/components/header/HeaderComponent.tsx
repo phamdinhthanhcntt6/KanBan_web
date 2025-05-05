@@ -23,8 +23,12 @@ const HeaderComponent = () => {
         <MenuBarComponent />
       </div>
       <div className="flex flex-row gap-x-4 items-center max-lg:hidden">
-        <Search size="24" className="cursor-pointer" />
-        <Heart size="24" className="cursor-pointer" />
+        <Link href={"/all-product"}>
+          <Search size="24" className="cursor-pointer" />
+        </Link>
+        <Link href={"/profile?tab=my_wishlists"}>
+          <Heart size="24" className="cursor-pointer" />
+        </Link>
         <CartComponent />
         <div>
           <AvatarComponent />

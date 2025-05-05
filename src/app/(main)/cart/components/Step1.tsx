@@ -76,7 +76,7 @@ const Step1 = () => {
       form.setValue("address", addressSelected.address);
       form.setValue("pincode", addressSelected.pinCode);
     }
-  }, [addressSelected, form]);
+  }, [addressSelected]);
 
   const checkDefaultAddress = (addresses: any[]) => {
     const defaultAddress = addresses.find((item) => item.isDefault);
@@ -113,6 +113,7 @@ const Step1 = () => {
       }
       const api = `/address/create`;
       await handleAPI(api, data, "post");
+      getAddresses(auth._id);
     } catch (error) {
       console.log(error);
     } finally {
