@@ -19,7 +19,7 @@ const HeaderComponent = () => {
           className="cursor-pointer"
         />
       </Link>
-      <div className="flex flex-row items-center gap-x-3 max-lg:hidden">
+      <div className="max-lg:hidden">
         <MenuBarComponent />
       </div>
       <div className="flex flex-row gap-x-4 items-center max-lg:hidden">

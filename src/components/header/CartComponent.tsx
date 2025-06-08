@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import handleAPI from "@/apis/handleApi";
@@ -31,8 +33,8 @@ const CartComponent = () => {
   const { defaultStep } = useStepStore();
 
   useEffect(() => {
-    getCartByUid(auth._id);
-  }, []);
+    auth.token && getCartByUid(auth._id);
+  }, [auth._id]);
 
   useEffect(() => {
     const totalAmount = cart.reduce(
@@ -72,7 +74,7 @@ const CartComponent = () => {
           {cart.length > 0 && (
             <div className="rounded-full bg-red-400 absolute -top-1 -right-1 p-1 flex items-center justify-center font-semibold" />
           )}
-          <Bag2 size="24" className="cursor-pointer" />
+          {auth._id && <Bag2 size="24" className="cursor-pointer" />}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="gap-1 p-4 flex flex-col">
